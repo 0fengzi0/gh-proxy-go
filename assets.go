@@ -49,6 +49,6 @@ var fallbackHTML = `<!DOCTYPE html>
 </head>
 <body>
     <h2>gh-proxy-go</h2>
-    <p>GitHub reverse proxy. Use <code>/https://github.com/user/repo</code> to access resources.</p>
+    <p>Use <code>/https://github.com/user/repo</code> (full URL) or <code>/user/repo</code> (shorthand) to access resources.</p>
 </body>
 </html>`

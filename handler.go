@@ -102,7 +102,11 @@ func Handler(c *gin.Context) {
 		return
 	}
 
-	u = cleanURL(u)
+	if !strings.Contains(u, "://") {
+		u = "https://github.com/" + u
+	} else {
+		u = cleanURL(u)
+	}
 
 	expID, matched := checkURL(u)
 	if matched == nil {
