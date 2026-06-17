@@ -25,10 +25,11 @@ func proxyHandler(c *gin.Context, targetBaseURL string) {
 	}
 
 	for k, vs := range c.Request.Header {
-		if k != "Host" {
-			for _, v := range vs {
-				outReq.Header.Add(k, v)
-			}
+		if k == "Host" || k == "Transfer-Encoding" || k == "Connection" {
+			continue
+		}
+		for _, v := range vs {
+			outReq.Header.Add(k, v)
 		}
 	}
 
@@ -56,6 +57,9 @@ func proxyHandler(c *gin.Context, targetBaseURL string) {
 	}
 
 	for k, vs := range resp.Header {
+		if k == "Transfer-Encoding" {
+			continue
+		}
 		for _, v := range vs {
 			c.Header(k, v)
 		}
@@ -65,7 +69,6 @@ func proxyHandler(c *gin.Context, targetBaseURL string) {
 	c.Header("Content-Security-Policy-Report-Only", "")
 	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Expose-Headers", "*")
-	c.Header("Transfer-Encoding", "")
 
 	if resp.StatusCode >= 300 && resp.StatusCode < 400 {
 		location := resp.Header.Get("Location")

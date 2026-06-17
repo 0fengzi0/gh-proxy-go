@@ -15,8 +15,9 @@ var (
 	exp3 = regexp.MustCompile(`^(?:https?://)?github\.com/([^/]+)/([^/]+)/(?:info|git-).*$`)
 	exp4 = regexp.MustCompile(`^(?:https?://)?raw\.(?:githubusercontent|github)\.com/([^/]+)/([^/]+)/.+?/.+$`)
 	exp5 = regexp.MustCompile(`^(?:https?://)?gist\.(?:githubusercontent|github)\.com/([^/]+)/.+?/.+$`)
+	exp6 = regexp.MustCompile(`^(?:https?://)?github\.com/.*$`)
 
-	patterns = []*regexp.Regexp{exp1, exp2, exp3, exp4, exp5}
+	patterns = []*regexp.Regexp{exp1, exp2, exp3, exp4, exp5, exp6}
 )
 
 func checkURL(u string) (int, []string) {
@@ -111,6 +112,11 @@ func Handler(c *gin.Context) {
 	expID, matched := checkURL(u)
 	if matched == nil {
 		c.String(403, "Invalid input.")
+		return
+	}
+
+	if expID == 6 {
+		proxyHandler(c, u)
 		return
 	}
 
