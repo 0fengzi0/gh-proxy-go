@@ -29,7 +29,7 @@ func loadConfig() *Config {
 	c := &Config{
 		Host:     getEnv("HOST", "0.0.0.0"),
 		Port:     getEnv("PORT", "11001"),
-		AssetURL: getEnv("ASSET_URL", "https://hunshcn.github.io/gh-proxy"),
+		AssetURL: getEnv("ASSET_URL", "https://github.com/0fengzi0/gh-proxy-go"),
 	}
 
 	if v := os.Getenv("JSDELIVR"); v == "1" || v == "true" || v == "yes" {
